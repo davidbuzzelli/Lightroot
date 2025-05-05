@@ -2,39 +2,30 @@ import os
 import openai
 from dotenv import load_dotenv
 
-# Load .env variables
 load_dotenv()
-api_key = os.getenv("OPENAI_API_KEY")
-
-# Debug: Confirm key load
-if not api_key:
-    print("[DEBUG ❌] OPENAI_API_KEY not found in .env")
-else:
-    print("[DEBUG ✅] OPENAI_API_KEY loaded successfully")
-
-# Set OpenAI key
-openai.api_key = api_key
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 class GPTAdapter:
-    def __init__(self, model="gpt-4"):
-        self.model = model
+    def __init__(self, api_key=None):
+        if api_key:
+            openai.api_key = api_key
 
-    def respond(self, prompt, memory=None):
-        print(f"[DEBUG →] Sending prompt: {prompt}")
+    def respond(self, prompt):
         try:
+            print(f"[DEBUG →] Sending prompt to OpenAI: {prompt}")
             response = openai.ChatCompletion.create(
-                model=self.model,
+                model="gpt-3.5-turbo",  # or "gpt-4" if available
                 messages=[
-                    {"role": "system", "content": "You are Nomad, a helpful Co-Thinker who helps users explore ideas."},
+                    {"role": "system", "content": "You are Nomad, a co-thinker in a CLI environment."},
                     {"role": "user", "content": prompt}
                 ]
             )
-            reply = response["choices"][0]["message"]["content"]
+            reply = response['choices'][0]['message']['content']
             print(f"[DEBUG ←] GPT response: {reply}")
             return reply
-
         except Exception as e:
-            print(f"[ERROR 🚨] OpenAI call failed: {e}")
-            return "⚠️ Could not connect to the GPT model."
+            print("[ERROR] OpenAI call failed:", e)
+            return "⚠️ Could not reach the large language model."
+
 
 
