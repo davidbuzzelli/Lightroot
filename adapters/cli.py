@@ -10,6 +10,7 @@ def start_cli():
 
     while True:
         user_input = input("You: ").strip()
+
         if user_input.lower() == "exit":
             print("\n🧠 Session ended. Memory trail:")
             for entry in eidos.recall():
@@ -18,7 +19,7 @@ def start_cli():
 
         eidos.remember(user_input)
 
-        print("[DEBUG →] Sending to GPTAdapter...")
+        print("[DEBUG →] Calling GPTAdapter.respond()...")
         response = gpt.respond(user_input)
         print(f"[DEBUG ←] GPT replied: {response}")
 
