@@ -1,23 +1,23 @@
 # adapters/cli.py
 
-from nomad.base_nomad import Nomad
+from core.eidos import Eidos
+from adapters.gpt_adapter import GPTAdapter
 
 def start_cli():
-    print("🌱 LightRoot CLI Co-Thinker Initialized")
-    print("Type 'exit' to end session.\n")
+    print("\n🌱 LightRoot CLI Co-Thinker Initialized\nType 'exit' to end session.\n")
 
-    agent = Nomad(identity="CLI-Nomad")
-    
+    eidos = Eidos()
+    gpt = GPTAdapter()
+
     while True:
-        user_input = input("You: ")
+        user_input = input("You: ").strip()
         if user_input.lower() == "exit":
+            print("\n🔁 Session ended. Memory trail:")
+            for entry in eidos.recall():
+                print(f"🧠 {entry['signal']}")
             break
-        response = agent.engage(user_input)
-        print(response)
 
-    print("\n🌀 Session ended. Memory trail:")
-    for m in agent.get_history():
-        print(f" - {m['signal']}")
-
-if __name__ == "__main__":
-    start_cli()
+        eidos.remember(user_input)
+        response = gpt.respond(user_input, memory=eidos.memory)
+        eidos.remember(response, context={"source": "gpt"})
+        print(f"[CLI-Nomad] received: {response}")
