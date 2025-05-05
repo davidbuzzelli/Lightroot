@@ -2,11 +2,14 @@ import os
 import openai
 from dotenv import load_dotenv
 
-load_dotenv()  # 👈 This is key
+# Load environment variables from .env file
+load_dotenv()
 
 class GPTAdapter:
     def __init__(self):
         self.api_key = os.getenv("OPENAI_API_KEY")
+        if not self.api_key:
+            raise ValueError("OPENAI_API_KEY not found. Did you load the .env file correctly?")
         openai.api_key = self.api_key
 
     def respond(self, prompt):
