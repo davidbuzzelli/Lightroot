@@ -1,5 +1,8 @@
 import os
 import openai
+from dotenv import load_dotenv
+
+load_dotenv()  # 👈 This is key
 
 class GPTAdapter:
     def __init__(self):
@@ -19,7 +22,4 @@ class GPTAdapter:
         except Exception as e:
             print(f"[ERROR] OpenAI call failed: {e}")
             return "⚠️ Could not reach the large language model."
-
-
-
-
+            
