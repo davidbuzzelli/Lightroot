@@ -25,5 +25,6 @@ def start_cli():
 
         eidos.remember(response, context={"source": "gpt"})
         print(f"[CLI-Nomad] received: {response}")
+        
 
 
