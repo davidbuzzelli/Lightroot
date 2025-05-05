@@ -1,4 +1,6 @@
 # adapters/cli.py
+import os
+gpt = GPTAdapter(api_key=os.getenv("OPENAI_API_KEY"))
 
 from core.eidos import Eidos
 from adapters.gpt_adapter import GPTAdapter
