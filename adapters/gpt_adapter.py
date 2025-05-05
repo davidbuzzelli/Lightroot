@@ -29,3 +29,6 @@ class GPTAdapter:
             return response["choices"][0]["message"]["content"].strip()
         except Exception as e:
             return f"[GPT Error]: {str(e)}"
+def respond(self, user_input, model="gpt-4"):
+    print("[DEBUG] Calling OpenAI with input:", user_input)
+    ...
