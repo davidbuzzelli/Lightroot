@@ -3,7 +3,6 @@ import os
 gpt = GPTAdapter(api_key=os.getenv("OPENAI_API_KEY"))
 
 from core.eidos import Eidos
-from adapters.gpt_adapter import GPTAdapter
 
 def start_cli():
     print("\n🌱 LightRoot CLI Co-Thinker Initialized\nType 'exit' to end session.\n")
