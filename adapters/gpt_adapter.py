@@ -32,3 +32,11 @@ class GPTAdapter:
 def respond(self, user_input, model="gpt-4"):
     print("[DEBUG] Calling OpenAI with input:", user_input)
     ...
+try:
+    response = openai.ChatCompletion.create(
+        ...
+    )
+    return response['choices'][0]['message']['content']
+except Exception as e:
+    print("[ERROR] OpenAI call failed:", e)
+    return "⚠️ Could not reach the large language model."
