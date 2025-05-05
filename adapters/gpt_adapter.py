@@ -3,7 +3,13 @@ import openai
 from dotenv import load_dotenv
 
 load_dotenv()
+
 api_key = os.getenv("OPENAI_API_KEY")
+
+if not api_key:
+    print("[DEBUG] ❌ OPENAI_API_KEY not loaded from .env")
+else:
+    print("[DEBUG] ✅ OPENAI_API_KEY loaded")
 
 class GPTAdapter:
     def __init__(self, model="gpt-4"):
@@ -11,6 +17,7 @@ class GPTAdapter:
 
     def respond(self, prompt, memory=None):
         try:
+            print(f"[DEBUG] Sending prompt to OpenAI: {prompt}")
             response = openai.ChatCompletion.create(
                 api_key=api_key,
                 model=self.model,
@@ -19,8 +26,11 @@ class GPTAdapter:
                     {"role": "user", "content": prompt}
                 ]
             )
-            return response['choices'][0]['message']['content']
+            reply = response['choices'][0]['message']['content']
+            print(f"[DEBUG] Received response: {reply}")
+            return reply
         except Exception as e:
             print("[ERROR] OpenAI call failed:", e)
             return "⚠️ Could not reach the large language model."
+
 
