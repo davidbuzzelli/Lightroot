@@ -16,18 +16,13 @@ def start_cli():
                 print(f"- {entry['signal']}")
             break
 
-        # Save input to memory
         eidos.remember(user_input)
 
-        # DEBUG: Confirm GPTAdapter is being used
-        print("[DEBUG] Calling GPTAdapter.respond()...")
-
-        # Get GPT response
+        print("[DEBUG →] Sending to GPTAdapter...")
         response = gpt.respond(user_input)
+        print(f"[DEBUG ←] GPT replied: {response}")
 
-        # Save response
         eidos.remember(response, context={"source": "gpt"})
-
-        # Print response
         print(f"[CLI-Nomad] received: {response}")
+
 
