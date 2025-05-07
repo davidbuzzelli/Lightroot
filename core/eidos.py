@@ -11,6 +11,7 @@ class Eidos:
     def __init__(self, name="Eidos-Core", save_file="eidos_memory.json"):
         self.name = name
         self.memory = []
+        self.has_initialized = False
         self.memory_manager = MemoryManager(filename=save_file)
         self.recall_index = 0
         self._load_memory()
